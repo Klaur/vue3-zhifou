@@ -2,12 +2,29 @@
   <GlobalHeader :user="userData"></GlobalHeader>
   <div class="container" style="padding-top: 72px">
     <ColumnList :list="list"></ColumnList>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <ValidateInput :rules="emailRules"></ValidateInput>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <!-- <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" />
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button> -->
+    </form>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
+import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
 const userData: UserProps = {
   isLogin: true,
   name: 'Lucas',
@@ -36,14 +53,20 @@ const testData: ColumnProps[] = [
 export default defineComponent({
   name: 'App',
   setup() {
+    const emailRules: RulesProp = [
+      { type: 'required', message: '请输入邮箱！' },
+      { type: 'email', message: '请输入正确格式的邮箱地址！' }
+    ]
     return {
       list: testData,
-      userData
+      userData,
+      emailRules
     }
   },
   components: {
     ColumnList,
-    GlobalHeader
+    GlobalHeader,
+    ValidateInput
   }
 })
 </script>
