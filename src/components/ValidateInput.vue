@@ -1,13 +1,13 @@
 <template>
   <div class="validate-input-container pb-3">
-    <input v-model="inputRef.val" type="text" class="form-control" :class="{ 'is-invalid': inputRef.error }" @blur="validate" />
+    <input :value="inputRef.val" type="text" class="form-control" :class="{ 'is-invalid': inputRef.error }" @blur="validate" @input="updateValue" />
     <div id="validationServer04Feedback" class="invalid-feedback" v-if="inputRef.error">
       {{ inputRef.message }}
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, PropType, reactive, watch } from 'vue'
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 interface RuleProp {
   type: 'required' | 'email'
@@ -16,15 +16,22 @@ interface RuleProp {
 export type RulesProp = RuleProp[]
 export default defineComponent({
   props: {
-    rules: Array as PropType<RulesProp>
+    rules: Array as PropType<RulesProp>,
+    modelValue: String
   },
   name: 'ValidateInput',
-  setup(props) {
+  setup(props, context) {
     const inputRef = reactive({
-      val: '',
+      val: props.modelValue || '',
       error: false,
       message: ''
     })
+    watch(
+      () => props.modelValue,
+      newVal => {
+        inputRef.val = newVal || ''
+      }
+    )
     const validate = () => {
       if (props.rules) {
         const allPass = props.rules.every(rule => {
@@ -45,12 +52,18 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allPass
-        console.log('inputRef.error', inputRef.error, 'allPass', allPass)
       }
+    }
+    const updateValue = (e: KeyboardEvent) => {
+      console.log('出发emit')
+      const targetValue = (e.target as HTMLInputElement).value
+      inputRef.val = targetValue
+      context.emit('update:modelValue', targetValue)
     }
     return {
       inputRef,
-      validate
+      validate,
+      updateValue
     }
   }
 })

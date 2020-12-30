@@ -2,26 +2,18 @@
   <GlobalHeader :user="userData"></GlobalHeader>
   <div class="container" style="padding-top: 72px">
     <ColumnList :list="list"></ColumnList>
+    <button @click="formData.email = '123@qq.com'">123@qq.com</button>
     <form>
       <div class="mb-3">
         <label class="form-label">Email address</label>
-        <ValidateInput :rules="emailRules"></ValidateInput>
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <validate-input v-model="formData.email" :rules="emailRules"></validate-input>
+        <div id="emailHelp" class="form-text">{{ formData.email }}We'll never share your email with anyone else.</div>
       </div>
-      <!-- <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" />
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button> -->
     </form>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
@@ -57,10 +49,15 @@ export default defineComponent({
       { type: 'required', message: '请输入邮箱！' },
       { type: 'email', message: '请输入正确格式的邮箱地址！' }
     ]
+    const formData = reactive({
+      email: '',
+      password: ''
+    })
     return {
       list: testData,
       userData,
-      emailRules
+      emailRules,
+      formData
     }
   },
   components: {
