@@ -2,20 +2,27 @@
   <GlobalHeader :user="userData"></GlobalHeader>
   <div class="container" style="padding-top: 72px">
     <ColumnList :list="list"></ColumnList>
-    <button @click="formData.email = '123@qq.com'">123@qq.com</button>
-    <form>
+    <ValidateForm :form-submit="onSubmit">
       <div class="mb-3">
         <label class="form-label">Email address</label>
-        <validate-input v-model="formData.email" :rules="emailRules"></validate-input>
-        <div id="emailHelp" class="form-text">{{ formData.email }}We'll never share your email with anyone else.</div>
+        <validate-input placeholder="请输入邮箱地址" type="text" v-model="formData.email" :rules="emailRules"></validate-input>
       </div>
-    </form>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <validate-input autocomplete="new-password" placeholder="请输入密码" type="password" v-model="formData.password" :rules="emailRules"></validate-input>
+        <!-- <div id="emailHelp" class="form-text">{{ formData.email }}We'll never share your email with anyone else.</div> -->
+      </div>
+      <template #submit>
+        <span class="btn btn-danger">Submit</span>
+      </template>
+    </ValidateForm>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
+import ValidateForm from './components/ValidateForm.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
 const userData: UserProps = {
   isLogin: true,
@@ -53,16 +60,21 @@ export default defineComponent({
       email: '',
       password: ''
     })
+    const onSubmit = (isValide: boolean) => {
+      console.log(isValide)
+    }
     return {
       list: testData,
       userData,
       emailRules,
-      formData
+      formData,
+      onSubmit
     }
   },
   components: {
     ColumnList,
     GlobalHeader,
+    ValidateForm,
     ValidateInput
   }
 })
