@@ -7,7 +7,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from 'vue'
+import { defineComponent, PropType, reactive, watch, onMounted } from 'vue'
+import { emitter } from '@/components/ValidateForm.vue'
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 interface RuleProp {
   type: 'required' | 'email'
@@ -33,7 +34,7 @@ export default defineComponent({
         inputRef.val = newVal || ''
       }
     )
-    const validate = () => {
+    const validate = (): boolean => {
       if (props.rules) {
         const allPass = props.rules.every(rule => {
           let passed = true
@@ -53,14 +54,18 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allPass
+        return allPass
       }
+      return true
     }
     const updateValue = (e: KeyboardEvent) => {
-      console.log('出发emit')
       const targetValue = (e.target as HTMLInputElement).value
       inputRef.val = targetValue
       context.emit('update:modelValue', targetValue)
     }
+    onMounted(() => {
+      emitter.emit('form-item-created', validate)
+    })
     return {
       inputRef,
       validate,

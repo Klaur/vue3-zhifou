@@ -18,6 +18,7 @@ module.exports = {
     'no-multiple-empty-lines': [2, { max: 0 }], // 不能有多的空行
     //'space-before-function-paren': [1, 'always'],
     'space-before-blocks': 2,
-    semi: [2, 'never']
+    semi: [2, 'never'],
+    '@typescript-eslint/no-explicit-any': ['off']
   }
 }
