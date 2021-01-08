@@ -1,11 +1,25 @@
 import { createStore } from 'vuex'
-const store = createStore({
+interface UserProp {
+  login: boolean
+  username?: string
+  avatar?: string
+  id?: string
+}
+export interface GlobalDataProp {
+  user: UserProp
+}
+const store = createStore<GlobalDataProp>({
   state: {
-    username: ''
+    user: {
+      login: false,
+      username: '',
+      avatar: '',
+      id: ''
+    }
   },
   mutations: {
-    updateUsername(state) {
-      state.username = 'klaur'
+    login(state, userInfo: object) {
+      state.user = { ...state.user, ...userInfo }
     }
   }
 })

@@ -2,16 +2,17 @@
   <nav class="navbar fixed-top navbar-dark bg-primary justify-content-between mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">知否专栏</a>
-      <ul v-if="!user.isLogin" class="list-inline mb-0">
+      {{ user }}
+      <ul v-if="!user.login" class="list-inline mb-0">
         <li class="list-inline-item">
-          <a class="btn btn-outline-light" href="#">登录</a>
+          <router-link to="/login" class="btn btn-outline-light">登录</router-link>
         </li>
         <li class="list-inline-item">
           <a class="btn btn-outline-light" href="#">注册</a>
         </li>
       </ul>
       <ul v-else class="list-inline mb-0">
-        <dropdown :title="`你好,${user.name}`">
+        <dropdown :title="`你好,${user.username}`">
           <dropdown-item>
             <a href="#" class="dropdown-item">新建文章</a>
           </dropdown-item>
@@ -27,7 +28,9 @@
   </nav>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import { GlobalDataProp } from '../store'
 import Dropdown from './Dropdown.vue'
 import DropdownItem from './DropdownItem.vue'
 export interface UserProps {
@@ -37,10 +40,12 @@ export interface UserProps {
 }
 export default defineComponent({
   name: 'GlobalHeader',
-  props: {
-    user: {
-      type: Object as PropType<UserProps>,
-      required: true
+  setup() {
+    const store = useStore<GlobalDataProp>()
+    return {
+      user: computed(() => {
+        return store.state.user
+      })
     }
   },
   components: {

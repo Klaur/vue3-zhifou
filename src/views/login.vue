@@ -18,10 +18,13 @@
 import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 import ValidateForm from '../components/ValidateForm.vue'
 import { useRouter } from 'vue-router'
+import { GlobalDataProp } from '@/store'
+import { useStore } from 'vuex'
 import { defineComponent, reactive } from 'vue'
 export default defineComponent({
   name: '',
   setup() {
+    const store = useStore<GlobalDataProp>()
     const router = useRouter()
     const emailRules: RulesProp = [
       { type: 'required', message: '请输入邮箱！' },
@@ -33,6 +36,10 @@ export default defineComponent({
     })
     const onSubmit = (isValide: boolean) => {
       if (isValide) {
+        store.commit('login', {
+          username: formData.email,
+          login: true
+        })
         router.push({ name: 'home' })
       }
     }
