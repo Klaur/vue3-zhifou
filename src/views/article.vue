@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <pre>{{ route }}</pre>
-  </div>
+  <div class="tui-editor-contents">我是文章详情页</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

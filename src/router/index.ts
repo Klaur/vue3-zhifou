@@ -19,9 +19,9 @@ const router = createRouter({
       component: () => import(/* webpackChunkName:"login" */ '@/views/column.vue')
     },
     {
-      path: '/columnDetail/:id',
-      name: 'columnDetail',
-      component: () => import(/* webpackChunkName:"login" */ '@/views/columnDetail.vue')
+      path: '/column/:columnId/article/create',
+      name: 'createArticle',
+      component: () => import(/* webpackChunkName:"login" */ '@/views/createArticle.vue')
     }
   ]
 })

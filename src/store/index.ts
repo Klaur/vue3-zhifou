@@ -17,6 +17,11 @@ const store = createStore<GlobalDataProp>({
       id: ''
     }
   },
+  getters: {
+    welcomeContent(state) {
+      return `你好，${state.user.username}`
+    }
+  },
   mutations: {
     login(state, userInfo: object) {
       state.user = { ...state.user, ...userInfo }

@@ -2,7 +2,6 @@
   <nav class="navbar fixed-top navbar-dark bg-primary justify-content-between mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">知否专栏</a>
-      {{ user }}
       <ul v-if="!user.login" class="list-inline mb-0">
         <li class="list-inline-item">
           <router-link to="/login" class="btn btn-outline-light">登录</router-link>
