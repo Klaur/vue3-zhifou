@@ -1,11 +1,11 @@
 <template>
   <ColumnList :list="list"></ColumnList>
-  <button class="btn btn-success" @click="clickHandle">点击</button>
+  <message :options="options"></message>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
-import message from '@/plugins/message/index.ts'
+import message from '@/plugins/toasts/src/index.vue'
 type ColumnListType = ColumnProps[]
 export default defineComponent({
   name: '',
@@ -20,13 +20,20 @@ export default defineComponent({
     const clickHandle = () => {
       message.info('详情跳转')
     }
+    const options = reactive({
+      message: '请登录系统',
+      title: '',
+      type: 'error'
+    })
     return {
       list,
-      clickHandle
+      clickHandle,
+      options
     }
   },
   components: {
-    ColumnList
+    ColumnList,
+    message
   }
 })
 </script>
