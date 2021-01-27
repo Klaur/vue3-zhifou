@@ -1,0 +1,8 @@
+.DS_Store
+node_modules
+/dist
+/public
+vue.config.js
+babel.config.js
+postcss.config.js
+prettier.config.js

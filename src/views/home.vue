@@ -1,6 +1,6 @@
 <template>
   <ColumnList :list="list"></ColumnList>
-  <message :options="options"></message>
+  <icon name="house"></icon>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
@@ -32,8 +32,7 @@ export default defineComponent({
     }
   },
   components: {
-    ColumnList,
-    message
+    ColumnList
   }
 })
 </script>
