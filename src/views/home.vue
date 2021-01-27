@@ -1,6 +1,8 @@
 <template>
   <ColumnList :list="list"></ColumnList>
   <icon name="house"></icon>
+  <icon name="email"></icon>
+  <icon name="yunc"></icon>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
