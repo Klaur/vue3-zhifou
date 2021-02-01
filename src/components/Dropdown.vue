@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown" ref="dropdownRef">
-    <a href="#" class="btn btn-outline-light my-2 dropdown-toggle" @click="toggleOpen">{{ title }}</a>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display: block" v-if="isOpen">
+    <span class="btn btn-outline-light my-2 dropdown-toggle" @click="toggleOpen">{{ title }}</span>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display: block" v-show="isOpen">
       <slot></slot>
     </ul>
   </div>
@@ -10,7 +10,7 @@
 import { defineComponent, ref, watch } from 'vue'
 import useClickOutside from '@/hooks/useClickOutside'
 export default defineComponent({
-  name: '',
+  name: 'Dropdown',
   props: {
     title: {
       type: String

@@ -1,9 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
-axios.defaults.baseURL = '/'
+import store from '@/store'
+axios.defaults.baseURL = 'http://localhost:3000'
 axios.defaults.timeout = 50000
 axios.defaults.withCredentials = false
-function returnResponse(response: AxiosResponse) {
+async function returnResponse(response: AxiosResponse) {
+  setTimeout(() => {
+    store.commit('setLoading', false)
+  }, 2000)
   const res = response.data
   if (res.code === 200 || Object.prototype.toString.call(res) === '[object Blob]') {
     return res.data || res
@@ -13,10 +17,11 @@ function returnResponse(response: AxiosResponse) {
 }
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const Authorization = Cookies.get('access-token') || ''
+    const Authorization = 'Bearer ' + Cookies.get('access-token')
     config.headers = {
       Authorization
     }
+    store.commit('setLoading', true)
     return config
   },
   err => Promise.reject(err)
@@ -28,6 +33,9 @@ axios.interceptors.response.use(
   err => {
     // 主动取消请求不抛出toast
     if (err && err.message === 'REQUEST_CANCEL') {
+      return false
+    }
+    if (err.response && err.response.config.params.onLoadingPage) {
       return false
     }
     if (err && err.response) {
@@ -75,7 +83,7 @@ axios.interceptors.response.use(
       err.message = '网络异常，请稍后重试'
     }
     alert(err.message)
-    new Error(err.message || 'Error 网络异常，请稍后重试')
+    // new Error(err.message || 'Error 网络异常，请稍后重试')
     return false
   }
 )

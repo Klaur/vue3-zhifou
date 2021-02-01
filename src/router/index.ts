@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouterHistory } from 'vue-router'
 const routerHistory: RouterHistory = createWebHistory()
-import store from '@/store'
+// import store from '@/store'
 const router = createRouter({
   history: routerHistory,
   routes: [
@@ -28,13 +28,27 @@ const router = createRouter({
     }
   ]
 })
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiredLogin && !store.state.user.login) {
-    next({ name: 'login' })
-  } else if (to.meta.redirectAlreadyLogin && store.state.user.login) {
-    next({ name: 'home' })
-  } else {
-    next()
-  }
+router.beforeEach(async (to, from, next) => {
+  next()
+  // const { login } = store.state
+  // console.log(login)
+  // if (!login) {
+  //   const res = await store.dispatch('checkUser', to.path === '/login')
+  //   console.log(res, '121212')
+  //   if (res) {
+  //     to.path === '/login' ? next('/') : next()
+  //   } else {
+  //     to.path === '/login' ? next() : next('/login')
+  //   }
+  // } else {
+  //   to.path === '/login' ? next('/') : next()
+  // }
+  // if (to.meta.requiredLogin && !store.state.login) {
+  //   next({ name: 'login' })
+  // } else if (to.meta.redirectAlreadyLogin && store.state.login) {
+  //   next({ name: 'home' })
+  // } else {
+  //   next()
+  // }
 })
 export default router

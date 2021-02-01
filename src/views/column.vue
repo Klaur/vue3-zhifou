@@ -10,7 +10,6 @@
     </div>
     <div class="column-content" style="margin-left: 30px">
       <h3 class="">前端专栏</h3>
-      <p class="">{{ str }}</p>
     </div>
   </div>
   <div class="card mb-3" style="padding: 16px 0 16px 16px">
@@ -29,22 +28,11 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import { GlobalDataProp } from '@/store'
+import { defineComponent } from 'vue'
 export default defineComponent({
   name: '',
   setup() {
-    const route = useRoute()
-    const store = useStore<GlobalDataProp>()
-    const str = computed(() => {
-      return store.getters.welcomeContent
-    })
-    return {
-      route,
-      str
-    }
+    return {}
   }
 })
 </script>

@@ -1,26 +1,24 @@
 <template>
-  <GlobalHeader :user="userData"></GlobalHeader>
+  <!-- <GlobalHeader></GlobalHeader> -->
+  <div>
+    <router-link to="/">首页</router-link>
+    <router-link to="/column/1">目录</router-link>
+    <router-link to="/login">登录</router-link>
+  </div>
   <div class="container" style="padding-top: 72px">
     <router-view></router-view>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
-const userData: UserProps = {
-  isLogin: true,
-  name: 'Lucas',
-  id: '1'
-}
+// import GlobalHeader from './components/GlobalHeader.vue'
 export default defineComponent({
   name: 'App',
   setup() {
-    return {
-      userData
-    }
+    return {}
   },
   components: {
-    GlobalHeader
+    // GlobalHeader
   }
 })
 </script>

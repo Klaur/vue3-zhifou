@@ -1,40 +1,44 @@
 <template>
-  <ColumnList :list="list"></ColumnList>
-  <icon name="house"></icon>
-  <icon name="email"></icon>
-  <icon name="yunc"></icon>
+  <div>首页</div>
+  <!-- <ColumnList :list="list"></ColumnList> -->
+  <!-- <Loading v-if="loading" background="gray" text="加载中。。。"></Loading> -->
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
-import message from '@/plugins/toasts/src/index.vue'
-type ColumnListType = ColumnProps[]
+import { computed, defineComponent, reactive } from 'vue'
+// import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
+// import Loading from '@/components/Loading.vue'
+import { useStore } from 'vuex'
+// import message from '@/components/createMessage'
+// type ColumnListType = ColumnProps[]
 export default defineComponent({
   name: '',
-  setup() {
-    const list: ColumnListType = [
-      {
-        id: '1',
-        title: 'hello',
-        description: '121212'
-      }
-    ]
-    const clickHandle = () => {
-      message.info('详情跳转')
-    }
+  async setup() {
+    const store = useStore()
+    // const list: ColumnListType = [
+    //   {
+    //     id: '1',
+    //     title: 'hello',
+    //     description: '121212'
+    //   }
+    // ]
     const options = reactive({
       message: '请登录系统',
       title: '',
       type: 'error'
     })
+    const loading = computed(() => {
+      return store.state.loading
+    })
+    // message('失败', 'error')
     return {
-      list,
-      clickHandle,
-      options
+      // list,
+      options,
+      loading
     }
   },
   components: {
-    ColumnList
+    // ColumnList
+    // Loading
   }
 })
 </script>
